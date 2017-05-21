@@ -1,0 +1,19 @@
+#!/bin/bash
+USER='user'
+pass="user"
+mysql -u $USER -p$pass <<EOF 2> /dev/null
+create database students;
+EOF
+[ $? -eq 0 ]  && echo Create DB || echo DB already exists
+mysql -u $USER -p$pass students <<EOF 2> /dev/null
+create table students(
+ id int,
+ name varchar(100),
+ mark int,
+ dept varchar(4)
+);
+EOF
+[ $? -eq 0] && echo Create table students || echo table students already exists
+mysql -u $USER  -p$pass students <<EOF
+delete from students;
+EOF
