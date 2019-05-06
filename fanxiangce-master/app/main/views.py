@@ -244,7 +244,9 @@ def album(id):
     if photo_amount == 0:
         album.cover = placeholder
     elif photo_amount != 0 and album.cover == placeholder:
-        album.cover = album.photos[0].path
+        print album.photos
+        album.cover = album.photos[0].url
+
 
     if current_user != album.author and album.no_public == True:
         abort(404)
@@ -429,7 +431,9 @@ def save_image(files):
     images = []
     for img in files:
         filename = hashlib.md5(current_user.username + str(time.time())).hexdigest()[:10]
-        image = photos.save(img, name=filename + '.')
+        image = photos.save(img, name=filename + '.png')
+        # image = photos.save(img, name=filename)
+
         file_url = photos.url(image)
         url_s = image_resize(image, 800)
         url_t = image_resize(image, 300)
