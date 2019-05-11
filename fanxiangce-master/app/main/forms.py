@@ -71,8 +71,8 @@ class NewAlbumForm(Form):
         FileRequired(u'你还没有选择图片！'),
         FileAllowed(photos, u'只能上传图片！')
     ])
-    asc_order = SelectField(u'显示顺序',
-                            choices=[('True', u'按上传时间倒序排列'), ('False', u'按上传时间倒序排列')])
+    asc_order = SelectField(u'显示顺序', choices=[(1, u'按上传时间倒序排列'), (0, u'按上传时间升序排列')],default=1,coerce=int)
+    # asc_order = SelectField(u'显示顺序', choices=[('True', u'按上传时间倒序排列'), ('False', u'按上传时间升序排列')])
     no_public = BooleanField(u'私密相册（勾选后相册仅自己可见）')
     no_comment = BooleanField(u'禁止评论')
     submit = SubmitField(u'提交')
@@ -89,8 +89,10 @@ class AddPhotoForm(Form):
 class EditAlbumForm(Form):
     title = StringField(u'标题')
     about = TextAreaField(u'介绍', render_kw={'rows': 8})
-    asc_order = SelectField(u'显示顺序',
-                             choices=[("1", u'按上传时间倒序排列'), ("0", u'按上传时间倒序排列')])
+    # asc_order = SelectField(u'显示顺序',choices=[(1, u'按上传时间倒序排列'), (0, u'按上传时间升序排列')])
+    asc_order = SelectField(u'显示顺序', choices=[(1, u'按上传时间倒序排列'), (0, u'按上传时间升序排列')], default=1, coerce=int)
+
+    # asc_order = SelectField(u'显示顺序',choices=[('True', u'按上传时间倒序排列'), ('False', u'按上传时间升序排列')])
     no_public = BooleanField(u'私密相册（右侧滑出信息提示：勾选后相册仅自己可见）')
     no_comment = BooleanField(u'允许评论')
     submit = SubmitField(u'提交')

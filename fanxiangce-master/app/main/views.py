@@ -112,6 +112,7 @@ def edit_album(id):
     form.title.data = album.title
     form.about.data = album.about
     form.asc_order.data = album.asc_order
+    print album.asc_order
     form.no_comment.data = album.no_comment
     form.no_public.data = album.no_public
     return render_template('edit_album.html', form=form, album=album)
@@ -256,7 +257,7 @@ def album(id):
             page, per_page=current_app.config['FANXIANGCE_PHOTOS_PER_PAGE'],
             error_out=False)
     else:
-        pagination = album.photos.order_by(Photo.order.asc()).paginate(
+        pagination = album.photos.order_by(Photo.order.desc()).paginate(
             page, per_page=current_app.config['FANXIANGCE_PHOTOS_PER_PAGE'],
             error_out=False)
     photos = pagination.items
@@ -452,10 +453,11 @@ def new_album():
         title = form.title.data
         about = form.about.data
         author = current_user._get_current_object()
+        asc_order=form.asc_order.data
         no_public = form.no_public.data
         no_comment = form.no_comment.data
         album = Album(title=title, about=about,
-                      cover=images[0][2], author=author,
+                      cover=images[0][2], author=author,asc_order=asc_order,
                       no_public=no_public, no_comment=no_comment)
         db.session.add(album)
 
@@ -477,7 +479,6 @@ def add_photo(id):
     if form.validate_on_submit(): # current_user.can(Permission.CREATE_ALBUMS)
         if request.method == 'POST' and 'photo' in request.files:
             images = save_image(request.files.getlist('photo'))
-
             for url in images:
                 photo = Photo(url=url[0], url_s=url[1], url_t=url[2],
                               album=album, author=current_user._get_current_object())

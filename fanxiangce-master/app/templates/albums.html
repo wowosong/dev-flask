@@ -79,7 +79,6 @@
             {% endif %}
             {% endif %}
         </div>
-        
         <hr>
         <div class="data-area">
             <i class="glyphicon glyphicon-user"></i>
@@ -94,7 +93,7 @@
             <br>
             {% if user.location %}
             <i class="glyphicon glyphicon-map-marker"></i>
-            <a href="http://maps.google.com/?q={{ user.location }}">{{ user.location }}</a><br>
+            <a href="http://maps.baidu.com/?q={{ user.location }}">{{ user.location }}</a><br>
             {% endif %}
             {% if current_user.is_administrator() %}
             <a href="mailto:{{ user.email }}">{{ user.email }}</a><br>
