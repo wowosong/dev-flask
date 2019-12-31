@@ -42,7 +42,7 @@ def return_file():
 @main.route('/explore', methods=['GET', 'POST'])
 def explore():
     photos = Photo.query.order_by(Photo.timestamp.desc()).all()
-    photos = [photo for photo in photos if photo.album.no_public == False and photo.author != current_user]
+    photos = [photo for photo in photos if  photo.album and photo.album.no_public == False and photo.author and photo.author != current_user]
     photo_type = "new"
     return render_template('explore.html', photos=photos, type=photo_type)
 
@@ -50,7 +50,7 @@ def explore():
 @main.route('/explore/hot', methods=['GET', 'POST'])
 def explore_hot():
     photos = Photo.query.all()
-    photos = [photo for photo in photos if photo.album.no_public == False]
+    photos = [photo for photo in photos if photo.album and photo.album.no_public == False]
     result = {}
     for photo in photos:
         result[photo] = len(list(photo.photo_liked))
