@@ -22,6 +22,10 @@
         {{ wtf.form_field(form.title) }}
         {{ wtf.form_field(form.about) }}
         {{ wtf.form_field(form.photo, multiple="multiple") }}
+        {% for foo in  images %}
+            {{ foo.url }}
+        {% endfor %}
+
         {{ wtf.form_field(form.asc_order) }}
         {{ wtf.form_field(form.no_public) }}
         {{ wtf.form_field(form.no_comment) }}

@@ -126,7 +126,7 @@
             <br>
             <p>
                 {% if current_user.is_authenticated and photo.is_liked_by(current_user) %}
-                <a href="{{ url_for('.like_photo', id=photo.id) }}" class="fav-btn fav-cancel" title="取消喜欢？">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;喜欢</a>
+                <a href="{{ url_for('.like_photo', id=photo.id) }}" class="fav-btn fav-cancel" title="取消喜欢？">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;取消喜欢</a>
                 {% else %}
                 <a href="{{ url_for('.like_photo', id=photo.id) }}" class="fav-btn" title="标为喜欢？">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;喜欢</a>
                 {% endif %}

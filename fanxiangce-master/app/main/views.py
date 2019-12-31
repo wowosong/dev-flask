@@ -194,7 +194,7 @@ def albums(username):
         flash(u'你的评论已经发表。', 'success')
         return redirect(url_for('.albums', username=username))
 
-    comments = user.messages.order_by(Message.timestamp.asc()).all()
+    comments = user.messages.order_by(Message.timestamp.desc()).all()
     return render_template('albums.html', form=form, comments=comments,
                            user=user, albums=albums, album_count=album_count,
                            photo_count=photo_count, pagination=pagination,
@@ -446,6 +446,7 @@ def save_image(files):
 @login_required
 def new_album():
     form = NewAlbumForm()
+    images = ''
     if form.validate_on_submit(): # current_user.can(Permission.CREATE_ALBUMS)
         if request.method == 'POST' and 'photo' in request.files:
             images = save_image(request.files.getlist('photo'))
@@ -462,13 +463,18 @@ def new_album():
         db.session.add(album)
 
         for url in images:
+            print url
+            print '-----------------end--------------'
             photo = Photo(url=url[0], url_s=url[1], url_t=url[2],
                           album=album, author=current_user._get_current_object())
             db.session.add(photo)
         db.session.commit()
         flash(u'相册创建成功！', 'success')
         return redirect(url_for('.edit_photo', id=album.id))
-    return render_template('new_album.html', form=form)
+    print images
+    return render_template('new_album.html', form=form,images=images)
+
+
 
 
 @main.route('/add-photo/<int:id>', methods=['GET', 'POST'])
